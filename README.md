@@ -4,27 +4,26 @@
 > A heavily modified, specialized fork of the Hermes Agent framework. Designed for raw, generalized interaction rather than API-specific wrappers.
 
 > ⚠️ **Disclaimer**
-> Проект экспериментальный и написан ПОЛНОСТЬЮ с помощью AI.
-> Это значит, что в коде и архитектуре всё ещё возможны ошибки, и перед использованием на реальном публичном сервере проект нужно тестировать с осторожностью.
->
 > *This project is experimental and written ENTIRELY with the help of AI.*
 > *This means that errors in the code and architecture are still possible, and the project should be tested with caution before being used on a real public server.*
 
 ---
 
-## 👁️ Core Vision: Raw Keystrokes over APIs
+## 👁️ Core Vision: General Embodied Agent (Raw I/O)
 
-The defining characteristic of the **Oneiro Framework** is its rejection of high-level API wrappers (like Mineflayer). Instead of calling `bot.pathfinder.goto(x, y, z)`, Oneiro interacts with the world exactly as a human does:
-- **Visual Input:** Interpreting screenshots and pixel data natively.
-- **Action Tokens to Raw Output:** The model does *not* output raw sleep timers or millisecond holds (which LLMs struggle with due to token generation speeds). Instead, it outputs semantic **Action Tokens** (e.g., `<ACTION_MOVE_FWD>` or `{"cmd": "hit"}`). The Oneiro Framework instantly intercepts these tokens and translates them into actual hardware-level raw keystrokes (`W`, `A`, `S`, `D`, `Left Click`) via libraries like `pyautogui`/`pynput`. This guarantees <10ms execution latency.
+The defining characteristic of the **Oneiro Framework** is its absolute rejection of high-level API wrappers (like Mineflayer). We are building a low-level, high-performance core (C++ / TypeScript) that interacts with any environment exactly as a human does:
+- **Visual Input:** Interpreting raw screen buffers and pixel data natively.
+- **Action Tokens to Raw Output:** The Reflex SLM outputs semantic **Action Tokens** (e.g., `<ACTION_MOVE_FWD>` or `{"cmd": "hit"}`). The custom C++ core instantly intercepts these tokens and translates them into OS-level hardware keystrokes (`W`, `A`, `S`, `D`, `Mouse Delta`).
 
-This architectural shift transforms Oneiro from a "Minecraft Bot" into a **General Embodied Agent** capable of learning and operating within any digital environment, engine, or game. 
+This architectural shift transforms Oneiro from a mere "game bot" into a true **General Embodied Agent**. Whether it's Minecraft, a terminal, or a 3D engine, Oneiro plays it by looking at the screen and pressing buttons.
 
 ---
 
-## 🧠 Architecture: Mixture of Agents (MoA)
+## 🧠 Cognitive Engine: Hermes Foundation & MoA
 
-To achieve both high-frequency reaction times and complex long-term reasoning without exploding compute costs, Oneiro splits cognitive load across distinct, specialized agents.
+We leverage the **Hermes Agent framework (by Nous Research)** as our cognitive foundation, wrapping our C++/TS hardware core in its powerful persistent learning loop.
+
+To achieve both high-frequency reaction times and complex long-term reasoning, Oneiro splits cognitive load via a **Mixture of Agents (MoA)**:
 
 ### 1. The Reflex Agent (Motor Cortex)
 - **Models:** `Oneiro MC Lite` (e.g., Gemma 1B - 3B)
